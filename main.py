@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score
 import joblib
 
 # Streamlit App Title
@@ -13,12 +13,10 @@ st.write("Train and predict stock market sentiment based on FII and DII activity
 
 # Load Dataset from Local File
 DATA_FILE = "FIIDII_activity.xlsx"  # Ensure this file is in the same directory as the script
-st.subheader("Loading Dataset")
 
 try:
     # Load Excel Data
     data = pd.read_excel(DATA_FILE)
-    st.success("Dataset loaded successfully!")
 except Exception as e:
     st.error(f"Failed to load dataset: {e}")
     st.stop()
@@ -49,17 +47,18 @@ model.fit(X_train_scaled, y_train)
 
 # Evaluate Model
 y_pred = model.predict(X_test_scaled)
-report = classification_report(y_test, y_pred, target_names=['Negative', 'Neutral', 'Positive'])
-st.subheader("Model Performance")
-st.text(report)
+accuracy = accuracy_score(y_test, y_pred)
+
+# Display Accuracy Score
+st.subheader("Model Accuracy")
+st.write(f"Accuracy: **{accuracy:.2f}**")
 
 # Save Model and Scaler
 joblib.dump(model, 'market_sentiment_model.pkl')
 joblib.dump(scaler, 'scaler.pkl')
-st.success("Model trained and saved successfully!")
 
 # Prediction Section
-st.subheader("Predict Market Sentiment using FII DII closure")
+st.subheader("Predict Market Sentiment")
 fii_input = st.number_input("Previous Day FII Net (in millions)", step=1.0)
 dii_input = st.number_input("Previous Day DII Net (in millions)", step=1.0)
 
