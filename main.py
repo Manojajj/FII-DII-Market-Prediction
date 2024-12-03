@@ -23,10 +23,6 @@ except Exception as e:
     st.error(f"Failed to load dataset: {e}")
     st.stop()
 
-# Display Dataset Preview
-st.write("Dataset Preview:")
-st.write(data.head())
-
 # Validate Dataset Columns
 required_columns = {'Previous Day FII Net', 'Previous Day DII Net', 'Market Sentiment'}
 if not required_columns.issubset(data.columns):
@@ -63,7 +59,7 @@ joblib.dump(scaler, 'scaler.pkl')
 st.success("Model trained and saved successfully!")
 
 # Prediction Section
-st.subheader("Predict Market Sentiment")
+st.subheader("Predict Market Sentiment using FII DII closure")
 fii_input = st.number_input("Previous Day FII Net (in millions)", step=1.0)
 dii_input = st.number_input("Previous Day DII Net (in millions)", step=1.0)
 
