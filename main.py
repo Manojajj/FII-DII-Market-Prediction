@@ -14,7 +14,7 @@ st.title("Market Sentiment Prediction")
 st.write("Train and predict stock market sentiment based on FII and DII activity.")
 
 # Download Dataset from GitHub
-DATA_URL = "FIIDII_activity.xlsx"  # Replace with actual GitHub file URL
+DATA_URL = "https://github.com/Manojajj/FII-DII-Market-Prediction/blob/main/FIIDII_activity.xlsx"  # Replace with actual GitHub file URL
 st.subheader("Loading Dataset")
 st.write("The dataset is being fetched from GitHub...")
 
