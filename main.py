@@ -6,22 +6,18 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
 import joblib
-import requests
-from io import BytesIO
 
 # Streamlit App Title
 st.title("Market Sentiment Prediction")
 st.write("Train and predict stock market sentiment based on FII and DII activity.")
 
-# Download Dataset from GitHub
-DATA_URL = "https://github.com/Manojajj/FII-DII-Market-Prediction/blob/main/FIIDII_activity.xlsx"  # Replace with actual GitHub file URL
+# Load Dataset from Local File
+DATA_FILE = "FIIDII_activity.xlsx"  # Ensure this file is in the same directory as the script
 st.subheader("Loading Dataset")
-st.write("The dataset is being fetched from GitHub...")
 
 try:
-    response = requests.get(DATA_URL)
-    response.raise_for_status()  # Check for HTTP errors
-    data = pd.read_excel(BytesIO(response.content))  # Load Excel data
+    # Load Excel Data
+    data = pd.read_excel(DATA_FILE)
     st.success("Dataset loaded successfully!")
 except Exception as e:
     st.error(f"Failed to load dataset: {e}")
